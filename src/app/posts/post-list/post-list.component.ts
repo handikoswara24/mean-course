@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 interface Post {
     title: string;
@@ -16,5 +16,5 @@ export class PostListComponent {
     //     { title: "Second Post", content: "This is second post's content" },
     //     { title: "Third Post", content: "This is third post's content" },
     // ];
-    posts: Post[] = [];
+    @Input() posts: any[] = [];
 }
