@@ -20,7 +20,7 @@ export class PostListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.posts = this.postService.getPosts();
+        this.postService.getPosts();
         this.postService.getPostUpdateListener().subscribe((posts) => {
             this.posts = posts;
         });
