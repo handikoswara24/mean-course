@@ -1,7 +1,11 @@
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
+const dotenv = require("dotenv");
 const http = require("http");
+const connectDB = require("./backend/config/db");
 
+dotenv.config();
+connectDB();
 const normalizePort = val => {
   var port = parseInt(val, 10);
 

@@ -1,5 +1,5 @@
 const express = require("express");
-
+const Post = require("./models/posts");
 const app = express();
 
 app.use(express.json());
@@ -11,23 +11,32 @@ app.use((req, res, next) =>{
     next();
 });
 
-app.post("/api/posts", (req, res,next) => {
-    const posts = req.body;
-    console.log(posts);
+app.post("/api/posts", async (req, res,next) => {
+    const post = new Post({
+        title : req.body.title,
+        content : req.body.content
+    });
+    console.log(post);
+    const createdPost = await post.save();
     res.status(201).json({
-        message: "Post added successfully"
+        message: "Post added successfully",
+        postId : createdPost._id,
     })
 });
 
-app.use("/api/posts", (req, res, next) => {
-    const posts = [
-        {id : "asday12j234" , title: "First Server-Side Post", content: "This is coming from server"},
-        {id : "asdas12j234" , title: "Second Server-Side Post", content: "This is coming from server"},
-    ];
+app.get("/api/posts", async (req, res, next) => {
+    const posts = await Post.find({});
     res.json({
         message : "Posts fetched successfully",
         posts
     });
+});
+
+app.delete("/api/posts/:id", async (req, res, next) => {
+    await Post.deleteOne({_id : req.params.id});
+    res.json({
+        message: "Post delete sucessfully"
+    })
 });
 
 module.exports = app;
